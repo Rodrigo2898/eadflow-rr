@@ -1,0 +1,15 @@
+services:
+  postgres-eadflow:
+    image: postgres:16.6
+    container_name: eadflow-db
+    environment:
+      POSTGRES_DB: eadflow
+      POSTGRES_USER: user_eadflow
+      POSTGRES_PASSWORD: password_eadflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
