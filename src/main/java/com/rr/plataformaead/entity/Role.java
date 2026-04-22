@@ -10,10 +10,10 @@ import lombok.Data;
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_permissoes_id_permissao_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_permissoes_id_sequence")
     @SequenceGenerator(
-            name = "tb_permissoes_id_permissao_seq",
-            sequenceName = "tb_permissoes_id_permissao_seq",
+            name = "tb_permissoes_id_sequence",
+            sequenceName = "tb_permissoes_id_sequence",
             allocationSize = 1
     )
     @Column(name = "id_permissao")

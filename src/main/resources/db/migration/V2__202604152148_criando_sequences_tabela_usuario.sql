@@ -1,7 +1,14 @@
--- CREATE SEQUENCE IF NOT EXISTS tb_usuario_id_seq START WITH 1 INCREMENT BY 1;
---
--- ALTER TABLE tb_usuario
---     ALTER COLUMN id_usuario SET DEFAULT nextval('tb_usuario_id_seq');
+
+
+CREATE SEQUENCE tb_usuario_id_sequence START WITH 1 INCREMENT BY 1;
+
+ALTER TABLE tb_usuario
+    ALTER COLUMN id_usuario SET DEFAULT nextval('tb_usuario_id_sequence');
+
+CREATE SEQUENCE tb_permissoes_id_sequence START WITH 1 INCREMENT BY 1;
+
+ALTER TABLE tb_permissoes
+    ALTER COLUMN id_permissao SET DEFAULT nextval('tb_permissoes_id_sequence');
 
 ALTER TABLE tb_usuario
     ALTER COLUMN tipo_pessoa SET NOT NULL;

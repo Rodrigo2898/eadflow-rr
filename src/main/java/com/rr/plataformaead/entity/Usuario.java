@@ -15,10 +15,10 @@ import java.util.Set;
 public abstract class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_usuario_id_usuario_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_usuario_id_sequence")
     @SequenceGenerator(
-            name = "tb_usuario_id_usuario_seq",
-            sequenceName = "tb_usuario_id_usuario_seq",
+            name = "tb_usuario_id_sequence",
+            sequenceName = "tb_usuario_id_sequence",
             allocationSize = 1
     )
     @Column(name = "id_usuario")

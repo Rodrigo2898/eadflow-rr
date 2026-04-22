@@ -8,12 +8,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "pessoa_fisica")
-@PrimaryKeyJoinColumn(name = "id_usuario")
+@PrimaryKeyJoinColumn(name = "id_pessoa_fisica")
 public class PessoaFisica extends Usuario {
 
     @Column(nullable = false, unique = true)
@@ -23,5 +24,5 @@ public class PessoaFisica extends Usuario {
     private String nome;
 
     @Column(name = "data_nascimento", nullable = false)
-    private LocalDate dataNascimento;
+    private LocalDateTime dataNascimento;
 }

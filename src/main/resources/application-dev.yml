@@ -27,4 +27,4 @@ logging:
     org.hibernate.SQL: DEBUG        
     org.hibernate.type: TRACE       
 server:
-  port: 8080
+  port: 8082
