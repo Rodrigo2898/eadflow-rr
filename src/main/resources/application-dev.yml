@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/eadflow
+    username: user_eadflow
+    password: password_eadflow
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true                  
+    properties:
+      hibernate:
+        format_sql: true            
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+logging:
+  pattern:
+    console: ${LOGPATTERN_CONSOLE:%green(%d{HH:mm:ss.SSS}) %blue(%-5level) %red([%thread]) %yellow(%logger{15}) - %msg%n}
+  level:
+    root: INFO
+    com.eduflow: DEBUG             
+    org.hibernate.SQL: DEBUG        
+    org.hibernate.type: TRACE       
+server:
+  port: 8082
+
+rr:
+  app:
+    jwtSecret: d85790f0a25f7ea3bc103fe35ca8a1621600c595de667b3b3212a6cfae347393
+    jwtExpirationMs: 86400000

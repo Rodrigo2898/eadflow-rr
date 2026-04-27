@@ -1,0 +1,33 @@
+services:
+  postgres-eadflow:
+    image: postgres:16.6
+    container_name: eadflow-db
+    environment:
+      POSTGRES_DB: eadflow
+      POSTGRES_USER: user_eadflow
+      POSTGRES_PASSWORD: password_eadflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user_eadflow -d eadflow"]
+      interval: 10s
+      retries: 5
+
+  app:
+    build: .
+    container_name: edaflow_app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-eadflow:5432/eadflow
+      SPRING_DATASOURCE_USERNAME: user_eadflow
+      SPRING_DATASOURCE_PASSWORD: password_eadflow
+      SPRING_PROFILES_ACTIVE: dev
+    depends_on:
+      postgres-eadflow:
+        condition: service_healthy
+
+volumes:
+  pgdata:
