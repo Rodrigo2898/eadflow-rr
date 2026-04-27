@@ -28,3 +28,8 @@ logging:
     org.hibernate.type: TRACE       
 server:
   port: 8082
+
+rr:
+  app:
+    jwtSecret: d85790f0a25f7ea3bc103fe35ca8a1621600c595de667b3b3212a6cfae347393
+    jwtExpirationMs: 86400000
