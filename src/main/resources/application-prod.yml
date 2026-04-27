@@ -26,4 +26,9 @@ logging:
     com.eduflow: INFO               
 
 server:
-  port: ${PORT:8080}              
+  port: ${PORT:8080}
+
+rr:
+  app:
+    jwtSecret: ${JWT_SECRET}
+    jwtExpirationMs: 86400000
