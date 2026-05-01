@@ -7,7 +7,6 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
