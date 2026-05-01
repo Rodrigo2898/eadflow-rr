@@ -2,6 +2,7 @@ package com.rr.plataformaead.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rr.plataformaead.entity.Usuario;
+import lombok.Getter;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+@Getter
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
