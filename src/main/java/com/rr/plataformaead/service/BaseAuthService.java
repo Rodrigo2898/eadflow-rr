@@ -42,6 +42,10 @@ public abstract class BaseAuthService<Entity extends Usuario, CadastroRequestDTO
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
+        if (userDetails == null) {
+            throw new RuntimeException("Usuario nao encontrado");
+        }
+
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .toList();
