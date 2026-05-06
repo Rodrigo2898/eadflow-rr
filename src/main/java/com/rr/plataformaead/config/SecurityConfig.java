@@ -1,6 +1,10 @@
 package com.rr.plataformaead.config;
 
+import com.rr.plataformaead.security.AuthoritiesLoggingAfterFilter;
+import com.rr.plataformaead.security.CsrfCookieFilter;
 import com.rr.plataformaead.security.JWTValidateTokenFilter;
+import com.rr.plataformaead.security.jwt.AuthEntryPointJwt;
+import com.rr.plataformaead.security.jwt.CustomAcessDenied;
 import com.rr.plataformaead.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +14,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -40,15 +45,28 @@ public class SecurityConfig {
         http.cors(Customizer.withDefaults());
 
         http.csrf(csrfConfig -> csrfConfig.csrfTokenRequestHandler(csrfTokenRequestAttributeHandler)
-                    .ignoringRequestMatchers("/api/auth/signup", "/api/auth/signin", "/api/auth/all")
+                    .ignoringRequestMatchers("/api/auth/pessoa-fisica/signup",
+                            "/api/auth/pessoa-fisica/signin", "/api/auth/all")
                     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()));
 
-        http.addFilterBefore(jwtValidateTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        http    .addFilterAfter(csrfCookieFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(authoritiesLoggingAfterFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtValidateTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
-        http.authorizeHttpRequests(requests -> requests.anyRequest().permitAll());
+        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth ->
+                        auth
+                                .requestMatchers("/api/pessoa-fisica").hasAnyRole("ADMIN")
+                                .requestMatchers("/api/pessoa-juridica").hasAnyRole("ADMIN")
+                                .requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers("/error").permitAll()
+                                .anyRequest().authenticated()
+                );
 
         http.authenticationProvider(authenticationProvider());
 
+        http.httpBasic(hbc -> hbc.authenticationEntryPoint(new AuthEntryPointJwt()));
+        http.exceptionHandling(ehc -> ehc.accessDeniedHandler(new CustomAcessDenied()));
         return http.build();
     }
 
@@ -72,6 +90,16 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public CsrfCookieFilter csrfCookieFilter() {
+        return new CsrfCookieFilter();
+    }
+
+    @Bean
+    public AuthoritiesLoggingAfterFilter authoritiesLoggingAfterFilter() {
+        return new AuthoritiesLoggingAfterFilter();
     }
 
     @Bean

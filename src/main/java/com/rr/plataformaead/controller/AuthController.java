@@ -1,22 +1,20 @@
 package com.rr.plataformaead.controller;
 
+import com.rr.plataformaead.entity.dto.JwtResponseDTO;
+import com.rr.plataformaead.entity.dto.LoginRequestDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/api/auth")
-public class AuthController {
+public interface AuthController<SignUpRequestDTO> {
 
     @PostMapping("/signup")
-    public ResponseEntity<String> registerUser() {
-        return ResponseEntity.status(HttpStatus.CREATED).body("Usuário registrado com sucesso");
-    }
+    ResponseEntity<String> registerUser(@RequestBody SignUpRequestDTO signUpRequestDTO);
 
     @PostMapping("/signin")
-    public ResponseEntity<String> authenticateUser() {
-        return ResponseEntity.status(HttpStatus.CREATED).body("Usuário logado com sucesso");
-    }
+    ResponseEntity<JwtResponseDTO> authenticateUser(LoginRequestDTO loginRequestDTO);
+
 }
