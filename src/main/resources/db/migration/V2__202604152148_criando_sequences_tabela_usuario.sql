@@ -36,3 +36,11 @@ VALUES
     ('ADMIN'),
     ('INSTRUTOR'),
     ('ALUNO');
+
+ALTER TABLE tb_permissoes
+ALTER COLUMN nome_permissao TYPE VARCHAR(50)
+USING nome_permissao::text;
+
+ALTER TABLE tb_usuario
+ALTER COLUMN tipo_pessoa TYPE VARCHAR(50)
+USING tipo_pessoa::text;

@@ -15,6 +15,6 @@ public interface AuthController<SignUpRequestDTO> {
     ResponseEntity<String> registerUser(@RequestBody SignUpRequestDTO signUpRequestDTO);
 
     @PostMapping("/signin")
-    ResponseEntity<JwtResponseDTO> authenticateUser(LoginRequestDTO loginRequestDTO);
+    ResponseEntity<JwtResponseDTO> authenticateUser(@RequestBody LoginRequestDTO loginRequestDTO);
 
 }
