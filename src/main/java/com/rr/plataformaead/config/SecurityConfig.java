@@ -8,6 +8,7 @@ import com.rr.plataformaead.security.jwt.CustomAcessDenied;
 import com.rr.plataformaead.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -58,6 +59,10 @@ public class SecurityConfig {
                         auth
                                 .requestMatchers("/api/pessoa-fisica").hasAnyRole("ADMIN")
                                 .requestMatchers("/api/pessoa-juridica").hasAnyRole("ADMIN")
+
+                                .requestMatchers(HttpMethod.POST, "/api/curso").hasAnyRole("ADMIN", "INSTRUTOR")
+                                .requestMatchers(HttpMethod.GET, "/api/curso").hasAnyRole("ADMIN", "INSTRUTOR", "ALUNO")
+
                                 .requestMatchers("/api/auth/**").permitAll()
                                 .requestMatchers("/error").permitAll()
                                 .anyRequest().authenticated()
